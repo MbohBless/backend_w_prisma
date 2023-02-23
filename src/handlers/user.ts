@@ -19,6 +19,7 @@ export const signIn = async (req: any, res: any) => {
     },
   });
   const isValid = await comparePasswords(req.body.password, user.password);
+  console.log(isValid)
   if (!isValid) {
     res.status(401);
     res.json({ message: "nope" });
