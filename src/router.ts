@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { body, oneOf, validationResult } from "express-validator";
+import { getOneProduct } from "./handlers/products";
 import { handleInputErrors } from "./modules/middlewares";
 
 const router = Router();
@@ -13,10 +14,7 @@ router.route("/").get((req, res) => {
  */
 router
   .route("/product")
-  .get((req, res) => {
-    console.log("bless you are a legend");
-    res.json({ message: "success authentication " });
-  })
+  .get(getOneProduct)
   .post((req, res) => {});
 router
   .route("/product/:id")
