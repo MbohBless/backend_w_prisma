@@ -12,7 +12,7 @@ export const getProducts = async (req, res: Response) => {
     },
   });
 
-  res.json(user.Product);
+  res.json({ data: user.Product });
 };
 
 // getone \
@@ -20,7 +20,7 @@ export const getOneProduct = async (req, res) => {
   const id = req.params.id;
   const product = await prisma.product.findFirst({
     where: {
-      id,
+      id:id,
       belongToId: req.user.id,
     },
   });
