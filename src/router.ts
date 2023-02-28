@@ -7,6 +7,13 @@ import {
   getProducts,
   updateProduct,
 } from "./handlers/products";
+import {
+  createUpdate,
+  deleteUpdate,
+  getOneUpdate,
+  getUpdates,
+  updateUpdate,
+} from "./handlers/update";
 import { handleInputErrors } from "./modules/middlewares";
 
 const router = Router();
@@ -33,27 +40,26 @@ router
  */
 router
   .route("/update")
-  .get(() => {})
+  .get(getUpdates)
   .post(
     body("title").exists().isString(),
     body("body").exists().isString(),
     body("productId").exists().isString(),
     body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
-
-    () => {}
+    createUpdate
   );
 router
   .route("/update/:id")
-  .get((req, res) => {})
+  .get(getOneUpdate)
   // .post((req: Request, res: Response) => {})
   .put(
     body("title").optional(),
     body("body").optional(),
     body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]).optional(),
     body("version").optional(),
-    (req: Request, res: Response) => {}
+    updateUpdate
   )
-  .delete((req, res) => {});
+  .delete(deleteUpdate);
 
 router
   .route("/updatepoints")
