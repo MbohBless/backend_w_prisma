@@ -17,9 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(customLogger("Custom logger"));
 
 app.get("/", (req, res, next) => {
-  setTimeout(() => {
-    next(new Error("hello"));
-  }, 100);
+  res.json({ message: "hello" });
 });
 
 app.use("/api", protect, router);
