@@ -12,7 +12,7 @@ export const getOneUpdate = async (req: any, res: any) => {
 export const getUpdates = async (req: any, res: any) => {
   const products = await prisma.product.findMany({
     where: {
-      belongsTo: req.user.id,
+      belongToId: req.user.id,
     },
     include: {
       Update: true,
@@ -24,17 +24,21 @@ export const getUpdates = async (req: any, res: any) => {
   res.json({ data: updates });
 };
 export const createUpdate = async (req: any, res: any) => {
-  const {productId, ...rest} = req.body
+  const { productId, ...rest } = req.body;
   const product = await prisma.product.findUnique({
     where: {
-      id: productId,
+      id: req.body.productId,
     },
   });
   if (!product) {
     return res.json({ message: "nope" });
   }
   const update = await prisma.update.create({
-    data: rest,
+    data: {
+      title: req.body.title,
+      body: req.body.body,
+      product: { connect: { id: product.id } },
+    },
   });
 
   res.json({ data: update });
